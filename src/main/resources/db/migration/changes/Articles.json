@@ -3,7 +3,7 @@
       {
         "changeSet": {
           "id": "Articles-1",
-          "author": "Ben Asperheim",
+          "author": "basperheim1",
           "preConditions": [
             {
               "onFail": "MARK_RAN"
@@ -12,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "Articles"
+                    "tableName": "articles"
                   }
                 }
               ]
@@ -64,7 +64,7 @@
                     }
                   }
                 ],
-                "tableName": "ARTICLES"
+                "tableName": "articles"
               }
             }
           ]
