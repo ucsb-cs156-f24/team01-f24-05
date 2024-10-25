@@ -1,0 +1,80 @@
+{
+    "databaseChangeLog": [
+      {
+        "changeSet": {
+          "id": "HelpRequest-1",
+          "author": "ryanzanone",
+          "preConditions": [
+            {
+              "onFail": "MARK_RAN"
+            },
+            {
+              "not": [
+                {
+                  "tableExists": {
+                    "tableName": "helprequest"
+                  }
+                }
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "createTable": {
+                "columns": [
+                  {
+                    "column": {
+                      "autoIncrement": true,
+                      "constraints": {
+                        "primaryKey": true,
+                        "primaryKeyName": "HELPREQUEST_PK"
+                      },
+                      "name": "ID",
+                      "type": "BIGINT"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "REQUEST_TIME",
+                      "type": "TIMESTAMP"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "REQUESTER_EMAIL",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "TEAM_ID",
+                      "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                        "name": "TABLE_OR_BREAKOUT_ROOM",
+                        "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                        "name": "EXPLANATION",
+                        "type": "VARCHAR(255)"
+                    }
+                  },
+                  {
+                    "column": {
+                        "name": "SOLVED",
+                        "type": "BOOLEAN"
+                    }
+                  }
+                ],
+                "tableName": "helprequest"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
