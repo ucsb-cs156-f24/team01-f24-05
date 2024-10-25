@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "menu_item_reviews")
+@Entity(name = "menu_item_review")
 public class MenuItemReview {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  private Long itemID; //add
+  private Long itemId; //add
 
   private String reviewerEmail;
   private int stars ; //rating from 0-5
