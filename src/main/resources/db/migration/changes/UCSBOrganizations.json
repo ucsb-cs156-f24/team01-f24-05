@@ -1,0 +1,61 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "ucsborganizations-1",
+        "author": "ishanjain",
+        "preConditions": [
+          {
+            "onFail": "MARK_RAN"
+          },
+          {
+            "not": [
+              {
+                "tableExists": {
+                  "tableName": "ucsborganizations"
+                }
+              }
+            ]
+          }
+        ],
+        "changes": [
+          {
+            "createTable": {
+              "columns": [
+                {
+                  "column": {
+                    "constraints": {
+                      "primaryKey": true,
+                      "primaryKeyName": "ucsborganization_PK"
+                    },
+                    "name": "org_code",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "org_translation_short",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "org_translation",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "inactive",
+                    "type": "boolean"
+                  }
+                }
+              ],
+              "tableName": "ucsborganizations"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
