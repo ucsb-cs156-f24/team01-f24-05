@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
  * This is a REST controller for HelpRequest
  */
 
-@Tag(name = "helprequest")
+@Tag(name = "HelpRequest")
 @RequestMapping("/api/helprequest")
 @RestController
 @Slf4j
@@ -112,5 +112,35 @@ public class HelpRequestController extends ApiController {
 
         helpRequestRepository.delete(helpRequest);
         return genericMessage("HelpRequest with id %s deleted".formatted(id));
+    }
+
+    /**
+     * Update a single request
+     * 
+     * @param id       id of the request to update
+     * @param incoming the new request
+     * @return the updated request object
+     */
+    @Operation(summary= "Update a single request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public HelpRequest updateHelpRequest(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid HelpRequest incoming) {
+
+        HelpRequest helpRequest = helpRequestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(HelpRequest.class, id));
+
+        helpRequest.setRequesterEmail(incoming.getRequesterEmail());
+        helpRequest.setTeamId(incoming.getTeamId());
+        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());
+        helpRequest.setExplanation(incoming.getExplanation());
+        helpRequest.setSolved(incoming.getSolved());
+        helpRequest.setRequestTime(incoming.getRequestTime());
+        
+
+        helpRequestRepository.save(helpRequest);
+
+        return helpRequest;
     }
 }
