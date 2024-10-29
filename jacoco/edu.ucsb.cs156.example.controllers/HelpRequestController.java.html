@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
  * This is a REST controller for HelpRequest
  */
 
-@Tag(name = &quot;helprequest&quot;)
+@Tag(name = &quot;HelpRequest&quot;)
 @RequestMapping(&quot;/api/helprequest&quot;)
 @RestController
 <span class="fc" id="L39">@Slf4j</span>
@@ -112,6 +112,36 @@ import java.time.LocalDateTime;
 
 <span class="fc" id="L113">        helpRequestRepository.delete(helpRequest);</span>
 <span class="fc" id="L114">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
+    }
+
+    /**
+     * Update a single request
+     * 
+     * @param id       id of the request to update
+     * @param incoming the new request
+     * @return the updated request object
+     */
+    @Operation(summary= &quot;Update a single request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public HelpRequest updateHelpRequest(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid HelpRequest incoming) {
+
+<span class="fc" id="L131">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L132">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+
+<span class="fc" id="L134">        helpRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L135">        helpRequest.setTeamId(incoming.getTeamId());</span>
+<span class="fc" id="L136">        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
+<span class="fc" id="L137">        helpRequest.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L138">        helpRequest.setSolved(incoming.getSolved());</span>
+<span class="fc" id="L139">        helpRequest.setRequestTime(incoming.getRequestTime());</span>
+        
+
+<span class="fc" id="L142">        helpRequestRepository.save(helpRequest);</span>
+
+<span class="fc" id="L144">        return helpRequest;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
