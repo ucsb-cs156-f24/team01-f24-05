@@ -4,7 +4,6 @@ import edu.ucsb.cs156.example.entities.Article;
 import edu.ucsb.cs156.example.entities.UCSBDate;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.ArticleRepository;
-import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -105,5 +104,34 @@ public class ArticlesController extends ApiController {
 
         articleRepository.delete(article);
         return genericMessage("Article with id %s deleted".formatted(id));
+    }
+
+    /**
+     * Update a single article
+     * 
+     * @param id       id of the article to update
+     * @param incoming the new article
+     * @return the updated article object
+     */
+    @Operation(summary= "Update a single article")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public Article updateArticle(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid Article incoming) {
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
+
+
+        article.setDateAdded(incoming.getDateAdded());
+        article.setEmail(incoming.getEmail());
+        article.setExplanation(incoming.getExplanation());
+        article.setTitle(incoming.getTitle());
+        article.setUrl(incoming.getUrl());
+
+        articleRepository.save(article);
+
+        return article;
     }
 }
