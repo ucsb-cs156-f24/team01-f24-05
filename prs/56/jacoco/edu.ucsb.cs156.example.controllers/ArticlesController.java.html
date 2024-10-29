@@ -88,5 +88,23 @@ import java.time.LocalDateTime;
 
 <span class="fc" id="L89">        return savedArticle;</span>
     }
+
+
+    /**
+     * Get a single article by id
+     * 
+     * @param id the id of the article
+     * @return a Article
+     */
+    @Operation(summary= &quot;Get a single article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public Article getById(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L104">        Article article = articleRepository.findById(id)</span>
+<span class="fc" id="L105">                .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
+
+<span class="fc" id="L107">        return article;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
