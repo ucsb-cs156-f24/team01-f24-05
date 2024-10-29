@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f24/team01-f24-05
 owner: ucsb-cs156-f24
 repo_name: team01-f24-05
-pull_requests: [{"author":{"id":"MDQ6VXNlcjI5MzkxNjA1","is_bot":false,"login":"17acastelein","name":""},"headRefName":"17acastelein","number":54,"title":"added database files and chromatic connection","url":"https://github.com/ucsb-cs156-f24/team01-f24-05/pull/54"},{"author":{"id":"U_kgDOB1P9DQ","is_bot":false,"login":"bgggggh","name":""},"headRefName":"bg-MenuItemReview-put","number":53,"title":"Added PUT(edit) to MenuItemReview","url":"https://github.com/ucsb-cs156-f24/team01-f24-05/pull/53"},{"author":{"id":"U_kgDOB1P9DQ","is_bot":false,"login":"bgggggh","name":""},"headRefName":"bg-MenuItemReview-delete","number":52,"title":"Baige menu item review delete","url":"https://github.com/ucsb-cs156-f24/team01-f24-05/pull/52"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjI5MzkxNjA1","is_bot":false,"login":"17acastelein","name":""},"headRefName":"17acastelein","number":55,"title":"added database files and chromatic connection","url":"https://github.com/ucsb-cs156-f24/team01-f24-05/pull/55"}]
