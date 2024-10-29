@@ -12,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "MENUITEMREVIEW"
+                    "tableName": "menu_item_review"
                   }
                 }
               ]
@@ -64,7 +64,7 @@
                     }
                   }
                 ],
-                "tableName": "MENUITEMREVIEW"
+                "tableName": "menu_item_review"
               }
             }
           ]
