@@ -60,24 +60,24 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
 
                 // arrange
 
-                UCSBOrganizations carrillo = UCSBOrganizations.builder()
+                UCSBOrganizations test = UCSBOrganizations.builder()
                                 .orgCode("test")
                                 .orgTranslationShort("test")
                                 .orgTranslation("test")
                                 .inactive(false)
                                 .build();
 
-                UCSBOrganizations dlg = UCSBOrganizations.builder()
-                                .orgCode("test")
+                UCSBOrganizations test1 = UCSBOrganizations.builder()
+                                .orgCode("hello")
                                 .orgTranslationShort("test")
-                                .orgTranslation("test")
+                                .orgTranslation("YO")
                                 .inactive(false)
                                 .build();
 
-                ArrayList<UCSBOrganizations> expectedCommons = new ArrayList<>();
-                expectedCommons.addAll(Arrays.asList(carrillo, dlg));
+                ArrayList<UCSBOrganizations> expectedOrganizations = new ArrayList<>();
+                expectedOrganizations.addAll(Arrays.asList(test, test1));
 
-                when(ucsbOrganizationsRepository.findAll()).thenReturn(expectedCommons);
+                when(ucsbOrganizationsRepository.findAll()).thenReturn(expectedOrganizations);
 
                 // act
                 MvcResult response = mockMvc.perform(get("/api/ucsborganizations/all"))
@@ -86,7 +86,93 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 // assert
 
                 verify(ucsbOrganizationsRepository, times(1)).findAll();
-                String expectedJson = mapper.writeValueAsString(expectedCommons);
+                String expectedJson = mapper.writeValueAsString(expectedOrganizations);
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(expectedJson, responseString);
+        }
+
+        // Tests with mocks for database actions
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
+
+                // arrange
+
+                UCSBOrganizations organizations = UCSBOrganizations.builder()
+                                .orgCode("test")
+                                .orgTranslationShort("test")
+                                .orgTranslation("test")
+                                .inactive(false)
+                                .build();
+
+                when(ucsbOrganizationsRepository.findById(eq("test"))).thenReturn(Optional.of(organizations));
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/ucsborganizations?id=test"))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+
+                verify(ucsbOrganizationsRepository, times(1)).findById(eq("test"));
+                String expectedJson = mapper.writeValueAsString(organizations);
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(expectedJson, responseString);
+        }
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+                // arrange
+
+                when(ucsbOrganizationsRepository.findById(eq("test"))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/ucsborganizations?id=test"))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+
+                verify(ucsbOrganizationsRepository, times(1)).findById(eq("test"));
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("EntityNotFoundException", json.get("type"));
+                assertEquals("UCSBOrganizations with id test not found", json.get("message"));
+        }
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void logged_in_user_can_get_all_ucsborganizations() throws Exception {
+
+                // arrange
+
+                UCSBOrganizations test = UCSBOrganizations.builder()
+                                .orgCode("test")
+                                .orgTranslationShort("test")
+                                .orgTranslation("test")
+                                .inactive(false)
+                                .build();
+
+                UCSBOrganizations test1 = UCSBOrganizations.builder()
+                                .orgCode("test")
+                                .orgTranslationShort("test")
+                                .orgTranslation("test")
+                                .inactive(false)
+                                .build();
+                
+                ArrayList<UCSBOrganizations> expectedOrganizations = new ArrayList<>();
+                expectedOrganizations.addAll(Arrays.asList(test, test1));
+
+                when(ucsbOrganizationsRepository.findAll()).thenReturn(expectedOrganizations);
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/ucsborganizations/all"))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+
+                verify(ucsbOrganizationsRepository, times(1)).findAll();
+                String expectedJson = mapper.writeValueAsString(expectedOrganizations);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         }
@@ -106,7 +192,7 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void an_admin_user_can_post_a_new_commons() throws Exception {
+        public void an_admin_user_can_post_a_new_organization() throws Exception {
                 // arrange
 
                 UCSBOrganizations test = UCSBOrganizations.builder()
@@ -177,5 +263,76 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 verify(ucsbOrganizationsRepository, times(1)).findById("123");
                 Map<String, Object> json = responseToJson(response);
                 assertEquals("UCSBOrganizations with id 123 not found", json.get("message"));
+        }
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_edit_an_existing_organization() throws Exception {
+                // arrange
+
+                UCSBOrganizations test = UCSBOrganizations.builder()
+                                .orgCode("test")
+                                .orgTranslationShort("test")
+                                .orgTranslation("test")
+                                .inactive(true)
+                                .build();
+
+                UCSBOrganizations testEdited = UCSBOrganizations.builder()
+                                .orgCode("123")
+                                .orgTranslationShort("123")
+                                .orgTranslation("123")
+                                .inactive(true)
+                                .build();
+
+                String requestBody = mapper.writeValueAsString(testEdited);
+
+                when(ucsbOrganizationsRepository.findById(eq("123"))).thenReturn(Optional.of(test));
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsborganizations?id=123")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+                verify(ucsbOrganizationsRepository, times(1)).findById("123");
+                verify(ucsbOrganizationsRepository, times(1)).save(testEdited); // should be saved with updated info
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(requestBody, responseString);
+        }
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_cannot_edit_organizations_that_does_not_exist() throws Exception {
+                // arrange
+
+                UCSBOrganizations editedOrganizations = UCSBOrganizations.builder()
+                                .orgCode("test")
+                                .orgTranslationShort("test")
+                                .orgTranslation("test")
+                                .inactive(true)
+                                .build();
+
+                String requestBody = mapper.writeValueAsString(editedOrganizations);
+
+                when(ucsbOrganizationsRepository.findById(eq("test"))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsborganizations?id=test")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+                verify(ucsbOrganizationsRepository, times(1)).findById("test");
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("UCSBOrganizations with id test not found", json.get("message"));
+
         }
 }

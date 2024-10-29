@@ -45,6 +45,22 @@ public class UCSBOrganizationsController extends ApiController {
         return organizations;
     }
 
+    /**
+     * This method returns a single diningcommons.
+     * @param code code of the diningcommons
+     * @return a single diningcommons
+     */
+    @Operation(summary= "Get a single organization")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("")
+    public UCSBOrganizations getById(
+            @Parameter(name="id") @RequestParam String id) {
+        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBOrganizations.class, id));
+
+        return organizations;
+    }
+
     @Operation(summary= "Create a new organizations")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
@@ -78,4 +94,33 @@ public class UCSBOrganizationsController extends ApiController {
         ucsbOrganizationsRepository.delete(organizations);
         return genericMessage("UCSBOrganizations with id %s deleted".formatted(id));
     }
+    /**
+    **
+     * Update a single diningcommons. Accessible only to users with the role "ROLE_ADMIN".
+     * @param code code of the diningcommons
+     * @param incoming the new commons contents
+     * @return the updated commons object
+     */
+    @Operation(summary= "Update a single organization")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public UCSBOrganizations updateOrganization(
+            @Parameter(name="id") @RequestParam String id,
+            @RequestBody @Valid UCSBOrganizations incoming) {
+
+        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBOrganizations.class, id));
+
+
+        organizations.setOrgCode(incoming.getOrgCode());
+        organizations.setOrgTranslationShort(incoming.getOrgTranslationShort());
+        organizations.setOrgTranslation(incoming.getOrgTranslation());
+        organizations.setInactive(incoming.getInactive());
+
+        ucsbOrganizationsRepository.save(organizations);
+
+        return organizations;
+    }
+
+    
 }
