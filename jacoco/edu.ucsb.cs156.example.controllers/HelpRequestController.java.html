@@ -56,6 +56,23 @@ import java.time.LocalDateTime;
     }
 
     /**
+     * Get a single request by id
+     * 
+     * @param id the id of the request
+     * @return a HelpRequest
+     */
+    @Operation(summary= &quot;Get a single request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public HelpRequest getById(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L69">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L70">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+
+<span class="fc" id="L72">        return helpRequest;</span>
+    }
+
+    /**
      * Create a new HelpRequest
      * 
      * @param requesterEmail;  email of the requester
@@ -81,19 +98,19 @@ import java.time.LocalDateTime;
         // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         // See: https://www.baeldung.com/spring-date-parameters
 
-<span class="fc" id="L84">        log.info(&quot;requestTime={}&quot;, requestTime);</span>
+<span class="fc" id="L101">        log.info(&quot;requestTime={}&quot;, requestTime);</span>
 
-<span class="fc" id="L86">        HelpRequest helpRequest = new HelpRequest();</span>
-<span class="fc" id="L87">        helpRequest.setRequesterEmail(requesterEmail);</span>
-<span class="fc" id="L88">        helpRequest.setTeamId(teamId);</span>
-<span class="fc" id="L89">        helpRequest.setTableOrBreakoutRoom(tableOrBreakoutRoom);</span>
-<span class="fc" id="L90">        helpRequest.setExplanation(explanation);</span>
-<span class="fc" id="L91">        helpRequest.setSolved(solved);</span>
-<span class="fc" id="L92">        helpRequest.setRequestTime(requestTime);</span>
+<span class="fc" id="L103">        HelpRequest helpRequest = new HelpRequest();</span>
+<span class="fc" id="L104">        helpRequest.setRequesterEmail(requesterEmail);</span>
+<span class="fc" id="L105">        helpRequest.setTeamId(teamId);</span>
+<span class="fc" id="L106">        helpRequest.setTableOrBreakoutRoom(tableOrBreakoutRoom);</span>
+<span class="fc" id="L107">        helpRequest.setExplanation(explanation);</span>
+<span class="fc" id="L108">        helpRequest.setSolved(solved);</span>
+<span class="fc" id="L109">        helpRequest.setRequestTime(requestTime);</span>
 
-<span class="fc" id="L94">        HelpRequest savedHelpRequest = helpRequestRepository.save(helpRequest);</span>
+<span class="fc" id="L111">        HelpRequest savedHelpRequest = helpRequestRepository.save(helpRequest);</span>
 
-<span class="fc" id="L96">        return savedHelpRequest;</span>
+<span class="fc" id="L113">        return savedHelpRequest;</span>
     }
 
     /**
@@ -107,11 +124,11 @@ import java.time.LocalDateTime;
     @DeleteMapping(&quot;&quot;)
     public Object deleteUCSBDate(
             @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L110">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
-<span class="fc" id="L111">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+<span class="fc" id="L127">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L128">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
 
-<span class="fc" id="L113">        helpRequestRepository.delete(helpRequest);</span>
-<span class="fc" id="L114">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
+<span class="fc" id="L130">        helpRequestRepository.delete(helpRequest);</span>
+<span class="fc" id="L131">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
     }
 
     /**
@@ -128,20 +145,22 @@ import java.time.LocalDateTime;
             @Parameter(name=&quot;id&quot;) @RequestParam Long id,
             @RequestBody @Valid HelpRequest incoming) {
 
-<span class="fc" id="L131">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
-<span class="fc" id="L132">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+<span class="fc" id="L148">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L149">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
 
-<span class="fc" id="L134">        helpRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
-<span class="fc" id="L135">        helpRequest.setTeamId(incoming.getTeamId());</span>
-<span class="fc" id="L136">        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
-<span class="fc" id="L137">        helpRequest.setExplanation(incoming.getExplanation());</span>
-<span class="fc" id="L138">        helpRequest.setSolved(incoming.getSolved());</span>
-<span class="fc" id="L139">        helpRequest.setRequestTime(incoming.getRequestTime());</span>
+<span class="fc" id="L151">        helpRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L152">        helpRequest.setTeamId(incoming.getTeamId());</span>
+<span class="fc" id="L153">        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
+<span class="fc" id="L154">        helpRequest.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L155">        helpRequest.setSolved(incoming.getSolved());</span>
+<span class="fc" id="L156">        helpRequest.setRequestTime(incoming.getRequestTime());</span>
         
 
-<span class="fc" id="L142">        helpRequestRepository.save(helpRequest);</span>
+<span class="fc" id="L159">        helpRequestRepository.save(helpRequest);</span>
 
-<span class="fc" id="L144">        return helpRequest;</span>
+<span class="fc" id="L161">        return helpRequest;</span>
     }
+
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
