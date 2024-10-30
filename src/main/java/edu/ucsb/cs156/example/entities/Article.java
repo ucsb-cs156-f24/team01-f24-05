@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "article")
+@Entity(name = "articles")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,5 @@ public class Article {
     private String url;
     private String explanation;
     private String email;
-    private LocalDateTime localDateTime;
+    private LocalDateTime dateAdded;
 }
