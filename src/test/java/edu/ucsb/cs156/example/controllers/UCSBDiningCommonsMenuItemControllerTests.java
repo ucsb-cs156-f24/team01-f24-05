@@ -3,8 +3,8 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
-import edu.ucsb.cs156.example.entities.UCSBDate;
-import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
+import edu.ucsb.cs156.example.entities.UCSBDiningCommonsMenuItem;
+import edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,29 +35,47 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(controllers = UCSBDiningCommonsMenuItemController.class)
 @Import(TestConfig.class)
 public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase {
-    
-    @MockBean
-    UCSBDateRepository ucsbDateRepository;
+        
+        @MockBean
+        UCSBDiningCommonsMenuItemRepository ucsbDiningCommonsMenuItemRepository;
 
-    @MockBean
-    UserRepository userRepository;
+        @MockBean
+        UserRepository userRepository;
 
-    @Test
-    public void logged_out_users_cannot_get_all() throws Exception {
-            mockMvc.perform(get("/api/ucsbdates/all"))
-                        .andExpect(status().is(403)); // logged out users can't get all
-    }
+        // Authorization tests for /api/ucsbdiningcommonsmenuitem/admin/all
 
-    @WithMockUser(roles = { "USER" })
-    @Test
-    public void logged_in_users_can_get_all() throws Exception {
-            mockMvc.perform(get("/api/ucsbdates/all"))
-                            .andExpect(status().is(200)); // logged
-    }
+        @Test
+        public void logged_out_users_cannot_get_all() throws Exception {
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem/all"))
+                                .andExpect(status().is(403)); // logged out users can't get all
+        }
 
-    @Test
-    public void logged_out_users_cannot_get_by_id() throws Exception {
-            mockMvc.perform(get("/api/ucsbdates?id=7"))
-                            .andExpect(status().is(403)); // logged out users can't get by id
-    }
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void logged_in_users_can_get_all() throws Exception {
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem/all"))
+                                .andExpect(status().is(200)); // logged
+        }
+
+        @Test
+        public void logged_out_users_cannot_get_by_id() throws Exception {
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem?id=7"))
+                                .andExpect(status().is(403)); // logged out users can't get by id
+        }
+
+        // Authorization tests for /api/ucsbdiningcommonsmenuitem/post
+        // (Perhaps should also have these for put and delete)
+        
+        @Test
+        public void logged_out_users_cannot_post() throws Exception {
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitem/post"))
+                                .andExpect(status().is(403));
+                }
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void logged_in_regular_users_cannot_post() throws Exception {
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitem/post"))
+                                .andExpect(status().is(403)); // only admins can post
+        }
 }
