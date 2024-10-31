@@ -1,0 +1,21 @@
+{
+  "groups": [
+    {
+      "name": "",
+      "type": "edu.ucsb.cs156.example.services.SystemInfoServiceImpl",
+      "sourceType": "edu.ucsb.cs156.example.services.SystemInfoServiceImpl"
+    },
+    {
+      "name": "",
+      "type": "edu.ucsb.cs156.example.services.wiremock.WiremockServiceDummy",
+      "sourceType": "edu.ucsb.cs156.example.services.wiremock.WiremockServiceDummy"
+    },
+    {
+      "name": "",
+      "type": "edu.ucsb.cs156.example.services.wiremock.WiremockServiceImpl",
+      "sourceType": "edu.ucsb.cs156.example.services.wiremock.WiremockServiceImpl"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
