@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: edu.ucsb.cs156.example.controllers.UCSBDiningCommonsMenuItemControllerTests
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.602 s <<< FAILURE! - in edu.ucsb.cs156.example.controllers.UCSBDiningCommonsMenuItemControllerTests
+edu.ucsb.cs156.example.controllers.UCSBDiningCommonsMenuItemControllerTests.test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist  Time elapsed: 0.043 s  <<< FAILURE!
+org.mockito.exceptions.verification.WantedButNotInvoked: 
+
+Wanted but not invoked:
+edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository#0 bean.findById(
+    0L
+);
+-> at edu.ucsb.cs156.example.controllers.UCSBDiningCommonsMenuItemControllerTests.test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist(UCSBDiningCommonsMenuItemControllerTests.java:120)
+Actually, there were zero interactions with this mock.
+
+	at edu.ucsb.cs156.example.controllers.UCSBDiningCommonsMenuItemControllerTests.test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist(UCSBDiningCommonsMenuItemControllerTests.java:120)
+
