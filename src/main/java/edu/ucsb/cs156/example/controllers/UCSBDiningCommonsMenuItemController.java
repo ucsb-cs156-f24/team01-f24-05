@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 
 /**
- * This is a REST controller for UCSBDates
+ * This is a REST controller for UCSBDiningCommonsMenuItem
  */
 
 @Tag(name = "UCSBDiningCommonsMenuItem")
@@ -40,9 +40,9 @@ public class UCSBDiningCommonsMenuItemController extends ApiController{
     UCSBDiningCommonsMenuItemRepository ucsbDiningCommonsMenuItemRepository;
     
     /**
-     * List all UCSB dates
+     * List all UCSB dining commons menu items
      * 
-     * @return an iterable of UCSBDate
+     * @return an iterable of UCSBDiningCommonsMenuItem
      */
     @Operation(summary= "List all ucsb dining commons menu items")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -70,7 +70,7 @@ public class UCSBDiningCommonsMenuItemController extends ApiController{
     }
 
     /**
-     * Create a new date
+     * Create a new menu item
      * 
      * @param diningCommonsCode  the code of the dining commons
      * @param name          the name of the menu item
@@ -98,10 +98,10 @@ public class UCSBDiningCommonsMenuItemController extends ApiController{
     }
 
     /**
-     * Delete a UCSBDate
+     * Delete a UCSBDiningCommonsMenuItem
      * 
-     * @param id the id of the date to delete
-     * @return a message indicating the date was deleted
+     * @param id the id of the menu item to delete
+     * @return a message indicating the menu item was deleted
      */
     @Operation(summary= "Delete a UCSBDiningCommonsMenuItem")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

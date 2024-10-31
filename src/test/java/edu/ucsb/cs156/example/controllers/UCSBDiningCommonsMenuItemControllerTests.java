@@ -79,6 +79,8 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                                 .andExpect(status().is(403)); // only admins can post
         }
 
+        // // Tests with mocks for database actions
+
         @WithMockUser(roles = { "USER" })
         @Test
         public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
