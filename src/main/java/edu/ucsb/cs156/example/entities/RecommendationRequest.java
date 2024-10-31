@@ -10,6 +10,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
+/**
+ * This is a JPA entity that represents a RecommendationRequest, i.e. an entry
+ * that comes from the Recommendation Request API for recommendation requests. 
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

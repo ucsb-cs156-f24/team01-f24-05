@@ -28,7 +28,9 @@ import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 
 
-
+/**
+ * This is a REST controller for RecommendationRequest
+ */
 
 
 @Tag(name = "RecommendationRequest")
