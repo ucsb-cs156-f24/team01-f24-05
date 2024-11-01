@@ -27,6 +27,9 @@ import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 
+/**
+ * This is a REST controller for Articles
+ */
 @Tag(name = "Articles")
 @RequestMapping("/api/articles")
 @RestController
