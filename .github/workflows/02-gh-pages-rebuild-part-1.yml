@@ -53,7 +53,7 @@ jobs:
          java-version-file: ./.java-version
   
     - name: Build javadoc
-      run: mvn -DskipTests javadoc:javadoc
+      run: mvn -DskipTests -Dmaven.javadoc.failOnError=false javadoc:javadoc
 
     - name: Upload to artifacts
       uses: actions/upload-artifact@v4
@@ -316,7 +316,7 @@ jobs:
          java-version-file: ./.java-version
 
     - name: Build javadoc
-      run: mvn -DskipTests javadoc:javadoc
+      run: mvn -DskipTests -Dmaven.javadoc.failOnError=false javadoc:javadoc
  
     - name: Upload javadoc to Artifacts
       if: always() # always upload artifacts, even if tests fail
