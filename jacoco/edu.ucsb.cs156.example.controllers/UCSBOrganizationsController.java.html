@@ -46,9 +46,9 @@ import jakarta.validation.Valid;
     }
 
     /**
-     * This method returns a single diningcommons.
-     * @param code code of the diningcommons
-     * @return a single diningcommons
+     * This method returns a single organizations.
+     * @param code code of the organizations
+     * @return a single organizations
      */
     @Operation(summary= &quot;Get a single organization&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
@@ -61,6 +61,17 @@ import jakarta.validation.Valid;
 <span class="fc" id="L61">        return organizations;</span>
     }
 
+    /**
+     * This method creates a new organizations. Accessible only to users with the role &quot;ROLE_ADMIN&quot;.
+     * @param code code of the organizations
+     * @param name name of the organizations
+     * @param hasSackMeal whether or not the commons has sack meals
+     * @param hasTakeOutMeal whether or not the commons has take out meals
+     * @param hasDiningCam whether or not the commons has a dining cam
+     * @param latitude latitude of the commons
+     * @param longitude logitude of the commons
+     * @return the save organizations
+     */
     @Operation(summary= &quot;Create a new organizations&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/post&quot;)
@@ -72,32 +83,37 @@ import jakarta.validation.Valid;
         )
         {
 
-<span class="fc" id="L75">        UCSBOrganizations organizations = new UCSBOrganizations();</span>
-<span class="fc" id="L76">        organizations.setOrgCode(orgCode);</span>
-<span class="fc" id="L77">        organizations.setOrgTranslationShort(orgTranslationShort);</span>
-<span class="fc" id="L78">        organizations.setOrgTranslation(orgTranslation);</span>
-<span class="fc" id="L79">        organizations.setInactive(inactive);</span>
+<span class="fc" id="L86">        UCSBOrganizations organizations = new UCSBOrganizations();</span>
+<span class="fc" id="L87">        organizations.setOrgCode(orgCode);</span>
+<span class="fc" id="L88">        organizations.setOrgTranslationShort(orgTranslationShort);</span>
+<span class="fc" id="L89">        organizations.setOrgTranslation(orgTranslation);</span>
+<span class="fc" id="L90">        organizations.setInactive(inactive);</span>
 
-<span class="fc" id="L81">        UCSBOrganizations savedorganizations = ucsbOrganizationsRepository.save(organizations);</span>
+<span class="fc" id="L92">        UCSBOrganizations savedorganizations = ucsbOrganizationsRepository.save(organizations);</span>
 
-<span class="fc" id="L83">        return savedorganizations;</span>
+<span class="fc" id="L94">        return savedorganizations;</span>
     }
 
+    /**
+     * Delete an organization. Accessible only to users with the role &quot;ROLE_ADMIN&quot;.
+     * @param code code of the organization
+     * @return a message indiciating the commons was deleted
+     */
     @Operation(summary= &quot;Delete a UCSBOrganization&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @DeleteMapping(&quot;&quot;)
     public Object deleteOrganizations(
             @Parameter(name=&quot;id&quot;) @RequestParam String id) {
-<span class="fc" id="L91">        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)</span>
-<span class="fc" id="L92">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganizations.class, id));</span>
+<span class="fc" id="L107">        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)</span>
+<span class="fc" id="L108">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganizations.class, id));</span>
 
-<span class="fc" id="L94">        ucsbOrganizationsRepository.delete(organizations);</span>
-<span class="fc" id="L95">        return genericMessage(&quot;UCSBOrganizations with id %s deleted&quot;.formatted(id));</span>
+<span class="fc" id="L110">        ucsbOrganizationsRepository.delete(organizations);</span>
+<span class="fc" id="L111">        return genericMessage(&quot;UCSBOrganizations with id %s deleted&quot;.formatted(id));</span>
     }
     /**
     **
-     * Update a single diningcommons. Accessible only to users with the role &quot;ROLE_ADMIN&quot;.
-     * @param code code of the diningcommons
+     * Update a single organizations. Accessible only to users with the role &quot;ROLE_ADMIN&quot;.
+     * @param code code of the organizations
      * @param incoming the new commons contents
      * @return the updated commons object
      */
@@ -108,18 +124,18 @@ import jakarta.validation.Valid;
             @Parameter(name=&quot;id&quot;) @RequestParam String id,
             @RequestBody @Valid UCSBOrganizations incoming) {
 
-<span class="fc" id="L111">        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)</span>
-<span class="fc" id="L112">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganizations.class, id));</span>
+<span class="fc" id="L127">        UCSBOrganizations organizations = ucsbOrganizationsRepository.findById(id)</span>
+<span class="fc" id="L128">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganizations.class, id));</span>
 
 
-<span class="fc" id="L115">        organizations.setOrgCode(incoming.getOrgCode());</span>
-<span class="fc" id="L116">        organizations.setOrgTranslationShort(incoming.getOrgTranslationShort());</span>
-<span class="fc" id="L117">        organizations.setOrgTranslation(incoming.getOrgTranslation());</span>
-<span class="fc" id="L118">        organizations.setInactive(incoming.getInactive());</span>
+<span class="fc" id="L131">        organizations.setOrgCode(incoming.getOrgCode());</span>
+<span class="fc" id="L132">        organizations.setOrgTranslationShort(incoming.getOrgTranslationShort());</span>
+<span class="fc" id="L133">        organizations.setOrgTranslation(incoming.getOrgTranslation());</span>
+<span class="fc" id="L134">        organizations.setInactive(incoming.getInactive());</span>
 
-<span class="fc" id="L120">        ucsbOrganizationsRepository.save(organizations);</span>
+<span class="fc" id="L136">        ucsbOrganizationsRepository.save(organizations);</span>
 
-<span class="fc" id="L122">        return organizations;</span>
+<span class="fc" id="L138">        return organizations;</span>
     }
 
     
