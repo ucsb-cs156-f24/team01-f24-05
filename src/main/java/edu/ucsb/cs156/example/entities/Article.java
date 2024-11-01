@@ -10,6 +10,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * This is a JPA entity that represents an Article, i.e. an entry
+ * that comes from the UCSB API for articles.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
