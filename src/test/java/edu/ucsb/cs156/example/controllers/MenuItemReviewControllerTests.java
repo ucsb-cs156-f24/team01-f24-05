@@ -45,7 +45,8 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         @MockBean
         UserRepository userRepository;
 
-        //Tests for GET
+        // Authorization tests for /api/ucsbdates/admin/all
+
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
                 mockMvc.perform(get("/api/menu_item_review/all"))
@@ -66,7 +67,9 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         }
 
 
-        //Tests for POST
+        // Authorization tests for /api/ucsbdates/post
+        // (Perhaps should also have these for put and delete)
+
         @Test
         public void logged_out_users_cannot_post() throws Exception {
                 mockMvc.perform(post("/api/menu_item_review/post"))
@@ -79,6 +82,8 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                 mockMvc.perform(post("/api/menu_item_review/post"))
                                 .andExpect(status().is(403)); // only admins can post
         }
+
+        // // Tests with mocks for database actions
 
         @WithMockUser(roles = { "USER" })
         @Test

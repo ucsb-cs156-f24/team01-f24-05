@@ -29,6 +29,9 @@ import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 
+/**
+ * This is a REST controller for MenuItemReview
+ */
 
 @Tag(name = "MenuItemReview")
 @RequestMapping("/api/menu_item_review")
@@ -40,6 +43,12 @@ public class MenuItemReviewController extends ApiController {
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
 
+    /**
+     * List all MeuItemReviews
+     * 
+     * @return an iterable of MenuItemReview
+     */
+
     @Operation(summary= "List all menu item reviews")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
@@ -48,6 +57,12 @@ public class MenuItemReviewController extends ApiController {
         return menuItemReviews;
     }
 
+    /**
+     * Get a single date by id
+     * 
+     * @param id the id of the date
+     * @return a MenuItemReview
+     */
 
 
     @Operation(summary= "Look up by id")
@@ -61,9 +76,16 @@ public class MenuItemReviewController extends ApiController {
         return review;
     }
 
-
-
-
+    /**
+     * Create a new review
+     * 
+     * @param itemId  
+     * @param reviewerEmail          
+     * @param stars
+     * @param comments
+     * @param dateReviewed date
+     * @return the saved menuItemReview
+     */
     @Operation(summary = "Create a new menu item review")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
@@ -93,6 +115,12 @@ public class MenuItemReviewController extends ApiController {
     }
 
 
+    /**
+     * Delete a MenuItemReview
+     * 
+     * @param id the id of the date to delete
+     * @return a message indicating the date was deleted
+     */
     @Operation(summary= "Delete a MenuItemReview")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
@@ -105,6 +133,13 @@ public class MenuItemReviewController extends ApiController {
         return genericMessage("MenuItemReview with id %s deleted".formatted(id));
     }
 
+    /**
+     * Update a single date
+     * 
+     * @param id       id of the date to update
+     * @param incoming the new date
+     * @return the updated date object
+     */
     @Operation(summary= "Update a single menu item review")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
