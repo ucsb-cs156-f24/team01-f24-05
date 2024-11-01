@@ -46,9 +46,9 @@ public class UCSBOrganizationsController extends ApiController {
     }
 
     /**
-     * This method returns a single diningcommons.
-     * @param code code of the diningcommons
-     * @return a single diningcommons
+     * This method returns a single organizations.
+     * @param code code of the organizations
+     * @return a single organizations
      */
     @Operation(summary= "Get a single organization")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -61,6 +61,17 @@ public class UCSBOrganizationsController extends ApiController {
         return organizations;
     }
 
+    /**
+     * This method creates a new organizations. Accessible only to users with the role "ROLE_ADMIN".
+     * @param code code of the organizations
+     * @param name name of the organizations
+     * @param hasSackMeal whether or not the commons has sack meals
+     * @param hasTakeOutMeal whether or not the commons has take out meals
+     * @param hasDiningCam whether or not the commons has a dining cam
+     * @param latitude latitude of the commons
+     * @param longitude logitude of the commons
+     * @return the save organizations
+     */
     @Operation(summary= "Create a new organizations")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
@@ -83,6 +94,11 @@ public class UCSBOrganizationsController extends ApiController {
         return savedorganizations;
     }
 
+    /**
+     * Delete an organization. Accessible only to users with the role "ROLE_ADMIN".
+     * @param code code of the organization
+     * @return a message indiciating the commons was deleted
+     */
     @Operation(summary= "Delete a UCSBOrganization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
@@ -96,8 +112,8 @@ public class UCSBOrganizationsController extends ApiController {
     }
     /**
     **
-     * Update a single diningcommons. Accessible only to users with the role "ROLE_ADMIN".
-     * @param code code of the diningcommons
+     * Update a single organizations. Accessible only to users with the role "ROLE_ADMIN".
+     * @param code code of the organizations
      * @param incoming the new commons contents
      * @return the updated commons object
      */

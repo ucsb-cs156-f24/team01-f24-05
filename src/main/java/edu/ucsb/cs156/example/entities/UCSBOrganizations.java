@@ -12,6 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity(name = "ucsborganizations")
+
+/** 
+ * This is a JPA entity that represents a UCSBOrganizations
+ * 
+ * A UCSBOrganizations is an organization at UCSB
+ */
+
 public class UCSBOrganizations {
   @Id
   private String orgCode;

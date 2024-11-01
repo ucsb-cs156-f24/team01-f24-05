@@ -6,6 +6,9 @@ import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * The UCSBOrganizations is a repository for UCSBOrganization entities
+ */
 @Repository
 public interface UCSBOrganizationsRepository extends CrudRepository<UCSBOrganizations, String> {
  
